@@ -4,6 +4,10 @@
     <ProjectReference Include="..\CondoAdmin.Domain\CondoAdmin.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTO\Building\AddBuilding\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

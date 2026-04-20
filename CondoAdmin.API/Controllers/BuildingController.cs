@@ -1,3 +1,4 @@
+using CondoAdmin.Application.DTO.Building.AddBuilding;
 using CondoAdmin.Domain.Entities;
 using CondoAdmin.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Http;
@@ -41,12 +42,28 @@ namespace CondoAdmin.API.Controllers
 
         // POST: api/clientes
         [HttpPost]
-        public async Task<ActionResult<Building>> CreateBuildings([FromBody] Building building)
+        public async Task<ActionResult<AddBuildingOutput>> CreateBuildings([FromBody] AddBuildingInput building)
         {
-            _contexto.Buildings.Add(building);
+            var input = new Building
+            {
+                Name = building.Name,
+                Address = building.Address,
+                City = building.City,
+            };
+            input.CreatedAt = DateTime.Now;
+            input.IsActive = true;
+
+            _contexto.Buildings.Add(input);
             await _contexto.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetBuildings), new { id = building.Id }, building);
+            var output = new AddBuildingOutput
+            {
+                Id = input.Id,
+                Name = input.Name,
+                Address = input.Address,
+                City = input.City,
+            };
+            return CreatedAtAction(nameof(GetBuildings), new { id = building.Id }, output);
         }
 
         // PUT: api/clientes/{id}
