@@ -15,6 +15,7 @@ public class Resident
     // FK
     public int UnitId { get; set; }
     public Unit Unit { get; set; } = null!;
+    public ICollection<Sale> Sales { get; set; } = [];
 
     // Navegación
     public ICollection<Payment> Payments { get; set; } = [];

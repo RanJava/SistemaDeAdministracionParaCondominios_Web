@@ -16,5 +16,6 @@ public class Unit
     // Navegación
     public ICollection<Resident> Residents { get; set; } = [];
     public ICollection<Visitor> Visitors { get; set; } = [];
+    public ICollection<Sale> Sales { get; set; } = [];
     public ICollection<MaintenanceRequest> MaintenanceRequests { get; set; } = [];
 }

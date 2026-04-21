@@ -11,6 +11,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Payment>            Payments            => Set<Payment>();
     public DbSet<Visitor>            Visitors            => Set<Visitor>();
     public DbSet<MaintenanceRequest> MaintenanceRequests => Set<MaintenanceRequest>();
+    public DbSet<Sale>               Sales               => Set<Sale>(); 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -75,6 +76,22 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.HasOne(x => x.Unit)
              .WithMany(u => u.MaintenanceRequests)
              .HasForeignKey(x => x.UnitId)
+             .OnDelete(DeleteBehavior.Restrict);
+        });
+
+         // Sale
+        modelBuilder.Entity<Sale>(e =>
+        {
+            e.HasKey(x => x.Id);
+            e.Property(x => x.SalePrice).HasColumnType("decimal(10,2)");
+            e.Property(x => x.Notes).HasMaxLength(500);
+            e.HasOne(x => x.Unit)
+             .WithMany(u => u.Sales)
+             .HasForeignKey(x => x.UnitId)
+             .OnDelete(DeleteBehavior.Restrict);
+            e.HasOne(x => x.Resident)
+             .WithMany(r => r.Sales)
+             .HasForeignKey(x => x.ResidentId)
              .OnDelete(DeleteBehavior.Restrict);
         });
     }

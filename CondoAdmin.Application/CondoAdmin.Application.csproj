@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Folder Include="DTO\Building\AddBuilding\" />
+    <Folder Include="DTO\Units\" />
   </ItemGroup>
 
   <PropertyGroup>
