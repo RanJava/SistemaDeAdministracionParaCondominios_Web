@@ -18,6 +18,7 @@ public class SalesController : BaseApiController
     [HttpPost]
     public async Task<ActionResult<TriggerSaleOutput>> TriggerSale([FromBody] TriggerSaleInput input)
     {
+        var transactionDate = DateTime.UtcNow;
         var resident = await _context.Residents
             .FirstOrDefaultAsync(r => r.DNI == input.DNI);
 
@@ -32,7 +33,7 @@ public class SalesController : BaseApiController
                 Phone = input.Phone!,
             };
 
-            resident.MoveInDate = DateTime.UtcNow;
+            resident.MoveInDate = transactionDate;
             resident.IsActive = true;
 
             _context.Residents.Add(resident);
@@ -58,7 +59,7 @@ public class SalesController : BaseApiController
                 MethodOfPayment = input.MethodOfPayment,
                 Notes = item.Notes
             };
-            sale.SaleDate = DateTime.UtcNow;
+            sale.SaleDate = transactionDate;
             sale.ResidentId = resident.Id;
             sale.UnitId = unit.Id;
 
@@ -83,7 +84,7 @@ public class SalesController : BaseApiController
             Buyer = $"{resident.FirstName} {resident.LastName}",
             DNI = resident.DNI,
             MethodOfPayment = input.MethodOfPayment,
-            SaleDate = DateTime.UtcNow,
+            SaleDate = transactionDate,
             Total = grandTotal,
             Units = outputDetails
         };

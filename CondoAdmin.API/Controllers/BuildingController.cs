@@ -20,7 +20,7 @@ namespace CondoAdmin.API.Controllers
             _contexto = contexto;
         }
 
-        // GET: api/clientes
+        // GET: api/buildings
         [HttpGet]
         public async Task<ActionResult<ICollection<Building>>> GetBuildings()
         {
@@ -28,7 +28,7 @@ namespace CondoAdmin.API.Controllers
             return Ok(buildings);
         }
 
-        // GET: api/clientes/{id}
+        // GET: api/buildings/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Building>> GetBuildings(int id)
         {
@@ -40,7 +40,7 @@ namespace CondoAdmin.API.Controllers
             return Ok(building);
         }
 
-        // POST: api/clientes
+        // POST: api/buildings
         [HttpPost]
         public async Task<ActionResult<AddBuildingOutput>> CreateBuildings([FromBody] AddBuildingInput building)
         {
@@ -67,7 +67,7 @@ namespace CondoAdmin.API.Controllers
             return CreatedAtAction(nameof(GetBuildings), new { id = building.Id }, output);
         }
 
-        // PUT: api/clientes/{id}
+        // PUT: api/buildings/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateBuildings(int id, [FromBody] Building building)
         {
@@ -87,19 +87,6 @@ namespace CondoAdmin.API.Controllers
             existing.IsActive = building.IsActive;
 
 
-            await _contexto.SaveChangesAsync();
-            return NoContent();
-        }
-
-        // DELETE: api/clientes/{id}
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBuilding(int id)
-        {
-            var building = await _contexto.Buildings.FindAsync(id);
-            if (building == null)
-                return NotFound();
-
-            _contexto.Buildings.Remove(building);
             await _contexto.SaveChangesAsync();
             return NoContent();
         }

@@ -71,18 +71,5 @@ namespace CondoAdmin.API.Controllers
             await _contexto.SaveChangesAsync();
             return NoContent();
         }
-
-        // DELETE: api/unit/{id}
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUnit(int id)
-        {
-            var unit = await _contexto.Units.FindAsync(id);
-            if (unit == null)
-                return NotFound();
-
-            _contexto.Units.Remove(unit);
-            await _contexto.SaveChangesAsync();
-            return NoContent();
-        }
     }
 }

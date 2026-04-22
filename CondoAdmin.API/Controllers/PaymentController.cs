@@ -51,29 +51,6 @@ namespace CondoAdmin.API.Controllers
             return CreatedAtAction(nameof(GetPayment), new { id = payment.Id }, payment);
         }
 
-        // PUT
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePayment(int id, [FromBody] Payment payment)
-        {
-            if (id != payment.Id)
-                return BadRequest("El ID no coincide con el pago enviado.");
-
-            var existing = await _contexto.Payments.FindAsync(id);
-            if (existing == null)
-                return NotFound();
-
-            // PROPIEDADES CORRECTAS
-            existing.Amount = payment.Amount;
-            existing.DueDate = payment.DueDate;
-            existing.PaidAt = payment.PaidAt;
-            existing.Notes = payment.Notes;
-            existing.Month = payment.Month;
-            existing.ResidentId = payment.ResidentId;
-
-            await _contexto.SaveChangesAsync();
-            return NoContent();
-        }
-
         // DELETE
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePayment(int id)
