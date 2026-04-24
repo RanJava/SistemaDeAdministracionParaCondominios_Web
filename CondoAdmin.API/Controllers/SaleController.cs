@@ -2,6 +2,7 @@ using CondoAdmin.Application.DTO.Sale.GetSale;
 using CondoAdmin.Application.DTO.Sale.TriggerSale;
 using CondoAdmin.Domain.Entities;
 using CondoAdmin.Infrastructure.Persistence;
+using CondoAdmin.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -137,8 +138,9 @@ public class SalesController : BaseApiController
 
             if (unit is null)
                 return BadRequest($"La unidad '{item.UnitNumber}' no existe.");
-            if (unit.Status == true)
-                return BadRequest($"La unidad '{item.UnitNumber}' ya fue vendida.");
+            if (unit.Status != UnitStatus.Available)
+    return BadRequest($"La unidad '{item.UnitNumber}' no está disponible (estado: {unit.Status}).");
+
 
             var sale = new Sale
             {
@@ -151,7 +153,7 @@ public class SalesController : BaseApiController
             };
 
             _context.Sales.Add(sale);
-            unit.Status = true;
+            unit.Status = UnitStatus.Sold;
             grandTotal += sale.SalePrice;
 
             outputDetails.Add(new SaleDetailOutput
