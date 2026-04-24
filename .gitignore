@@ -1,2 +1,7 @@
+# Carpetas de compilación — nunca se suben al repo
 bin/
 obj/
+
+# Configuración local 
+appsettings.json
+appsettings.Development.json

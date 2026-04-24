@@ -4,11 +4,10 @@ public class Sale
 {
     public int Id { get; set; }
     public DateTime SaleDate { get; set; }
-    public int SalePrice { get; set; }
+    public decimal SalePrice { get; set; }
     public required string MethodOfPayment { get; set; }
     public string? Notes { get; set; }
 
-    // FK
     public int UnitId { get; set; }
     public Unit Unit { get; set; } = null!;
 
